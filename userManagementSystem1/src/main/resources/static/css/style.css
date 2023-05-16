@@ -1,0 +1,93 @@
+@charset "ISO-8859-1";
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&family=Syne:wght@400;500;600;700;800&display=swap');
+* {
+	box-sizing: border-box;
+}
+body {
+	
+	font-family: 'Raleway', sans-serif;
+}
+h1,h2,h3,h4,h5 {
+	font-family: 'Syne', sans-serif; 
+	font-weight: 500;
+}
+.back-cyan-light {
+	background: #e0f7fa;
+}
+.back-baby-blue {
+	background: #8AAAE5;
+}
+.light-blue {
+	background: #b2ebf2;
+}
+.box-shadow-light {
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.table-rounded {
+    border-radius: 5px;
+    overflow: hidden;
+}
+.table tr{
+	text-align: center;
+} 
+.fa:hover {
+	transform: scale(1.2);
+}
+.btn:hover .fa {
+	transform: scale(1.2);
+}
+.login-card-width {
+	width: 35%;
+}
+.navbar {
+	top: 0;
+	z-index: 1;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.19);
+}
+.alert{
+	display: none;
+}
+
+.dataTables_paginate {
+	display: flex;
+	justify-content: right;
+} 
+.pagination, .paginate_button {
+	border-radius: 50px !important; 
+}
+.active a  {
+	transform: scale(1.1);
+	background: #e3f2fd !important; 
+	color: black !important;
+}
+.pagination_ul {
+	list-style: none;
+	border-radius: 5px; 
+	background: #8AAAE5;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.pagination_ul li {
+	float: left;
+	padding: 10px;
+}
+.pagination_ul li a {
+	text-decoration: none;
+	padding: 7px 12px 7px 12px;
+	border-radius: 5px; 
+	color: white;
+}
+.pagination_ul li.active a {
+	background: #e0f7fa;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.pagination_ul li:hover a{
+	background: #e0f7fa;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	color: black;
+} 
+.fa-sort {
+	color: white;
+}
+.error-text {
+	display: none;
+}

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Insert title here</title>
+		<!-- Bootstrap cdn -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+		
+		<!-- Font awesome cdn -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+		<!-- Css link -->
+		<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+		
+		<script type="text/javascript" th:src="@{/javascript/script.js}"></script>	
+		
+	</head>
+	<body class="back-baby-blue">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light w-100 position-fixed" >
+		  <div class="container-fluid">
+		    <a class="navbar-brand" href="#">User Mangement System</a>
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse navbar-collapse" id="navbarNav">
+		      <ul class="navbar-nav mr-auto">
+		        <li class="nav-item">
+		          <a class="nav-link active" aria-current="page" href="/home">Home&nbsp;<i class="fa fa-home"></i></a>
+		        </li>
+		      </ul>
+		    </div>
+		  </div>
+		</nav>
+	
+		<div class="d-flex align-items-center justify-content-center mb-5" style="margin-top: 90px;">
+			<div class="card w-50 bg-light  rounded p-4 box-shadow-light">
+				<div class="text-center mb-4">
+					<h3 class="">User Registration Form</h3>
+				</div>
+				<div class="alert alert-danger error-msg" id="errorMsg" role="alert" >
+					<strong>ERROR!</strong> Please enter valid details
+				</div>
+				<form action="#" th:action="@{/saveUser(id=${user.userId})}"  th:object="${user}"  method="post">
+					<div class="row">
+						<div class="form-group mb-3 col-6">
+							<label class="mb-2" for="userFirstName">First Name <span class="asteric text-danger fs-4">*</span></label>
+							<input 
+								type="text" 
+								class="form-control" 
+								name="userFirstName" 
+								id="userFirstName" 
+								placeholder="Enter first name" 
+								th:field="*{userFirstName}"
+								onkeyup="validateNameInput(this)">
+								
+							<small class="error-text text-danger" >Please enter alphabets only </small>
+						</div>
+						<div class="form-group mb-3 col-6">
+							<label class="mb-2" for="userLastName">Last Name <span class="asteric text-danger fs-4">*</span></label>
+							<input 
+								type="text" 
+								class="form-control" 
+								name="userLastName" 
+								id="userLastName" 
+								placeholder="Enter last name" 
+								th:field="*{userLastName}"
+								onkeyup="validateNameInput(this)">
+							
+							<small class="error-text text-danger">Please enter alphabets only</small>
+						</div>
+					</div>
+					<div class="form-group mb-3">
+						<label class="mb-2" for="userDateOfBirth">Date Of Birth <span class="asteric text-danger fs-4">*</span></label>
+						<input 
+							type="date" 
+							class="form-control" 
+							name="userDateOfBirth" 
+							id="userDateOfBirth" 
+							placeholder="dd/mm/yyyy" 
+							max="2004-01-01"
+							th:placeholder="${userDateOfBirth}"
+							th:value="${userDateOfBirth}"
+							th:field="*{userDateOfBirth}" >
+							
+						<small class="error-text text-danger">Please enter a valid date of birth</small>
+					</div>
+					<div class="form-group mb-3">
+						<label class="mb-2" for="userEmail">Email <span class="asteric text-danger fs-4">*</span></label>
+						<input 
+							type="email" 
+							class="form-control" 
+							name="userEmail" 
+							id="userEmail" 
+							placeholder="abc@gmail.com" 
+							th:field="*{userEmail}"
+							onkeyup="validateEmail(this)">
+							
+						<small class="error-text text-danger">Please enter a valid email</small>
+					</div>
+					<div class="form-group mb-4">
+						<label class="mb-2" for="userPassword">Password <span class="asteric text-danger fs-4">*</span></label> 
+						<input 
+							type="password" 
+							class="form-control" 
+							name="userPassword" 
+							id="userPassword" 
+							placeholder="Password"
+							th:value="*{userPassword}" 
+							th:field="*{userPassword}"
+							th:disabled="${user.userId != 0}" 
+							onkeyup="validatePassword(this)">
+						
+						<small class="error-text text-danger">Password should be minimum 8 characters and include at least 1 special character, 1 uppercase and 1 lowercase letter</small>
+						
+						<small>
+							<label for="showPasswordCheckbox">Show password</label>
+							<input type="checkbox" id="showPasswordCheckbox" onclick="showPassword()">
+						</small>
+					</div>
+					<div class="form-group mb-4">
+						<label class="mb-2" for="userMobileNumber">Mobile number <span class="asteric text-danger fs-4">*</span></label>
+						<input 
+							type="text" 
+							class="form-control" 
+							name="userMobileNumber" 
+							id="userMobileNumber" 
+							placeholder="Mobile Number"
+							maxlength="10"
+							th:field="*{userMobileNumber}"
+							onkeyup="validateMobileNumber(this)">
+						
+						<small class="error-text text-danger">Please enter a valid mobile number</small>
+					</div>
+					
+					<hr>
+					<div class="row mb-3">
+						<div class="col-6">
+							<h5>Permanent address <span class="asteric text-danger fs-4">*</span></h5>
+						</div>
+						<div class="col-6">
+							<h5>Correspondence address</h5>
+						</div>	
+					</div>		
+					<div class="row ">
+						<div class="col-5">
+						<div class="form-group mb-3 d-none">
+								<input 
+									type="hidden" class="form-control" 
+									name="userPermanentAddressId" 
+									id="userPermanentAddressId" 
+									placeholder="Enter street name" 
+									th:field="*{address[0].addressId}">
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userPermanentAddressStreet">Street <span class="asteric text-danger fs-4">*</span></label>
+								<input 
+									type="text" class="form-control" 
+									name="userPermanentAddressStreet" 
+									id="userPermanentAddressStreet" 
+									placeholder="Enter street name" 
+									th:field="*{address[0].addressStreet}"
+									onkeyup="validateStreet(this)">
+									
+								<small class="error-text text-danger">Please enter a valid street name</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userPermanentAddressLine1">Line 1 <span class="asteric text-danger fs-4">*</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="userPermanentAddressLine1" 
+									id="userPermanentAddressLine1" 
+									placeholder="Enter Line 1 " 
+									th:field="*{address[0].addressLine1}"
+									onkeyup="validateLine(this)">
+									
+								<small class="error-text text-danger">Please enter a valid address</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userPermanentAddressLine2">Line 2 <span class="asteric text-danger fs-4">*</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="userPermanentAddressLine2" 
+									id="userPermanentAddressLine2" 
+									placeholder="Enter Line 2  " 
+									th:field="*{address[0].addressLine2}"
+									onkeyup="validateLine(this)">
+								
+								<small class="error-text text-danger">Please enter a valid address</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userPermanentAddressCity">City <span class="asteric text-danger fs-4">*</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="userPermanentAddressCity" 
+									id="userPermanentAddressCity" 
+									placeholder="Enter city name " 
+									th:field="*{address[0].addressCity}"
+									onkeyup="validateCityState(this)">
+									
+								<small class="error-text text-danger">Please enter a valid city name</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userPermanentAddressState">State <span class="asteric text-danger fs-4">*</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="userPermanentAddressState" 
+									id="userPermanentAddressState" 
+									placeholder="Enter state name " 
+									th:field="*{address[0].addressState}"
+									onkeyup="validateCityState(this)">
+									
+								<small class="error-text text-danger">Please enter a valid state name</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userPermanentAddressPincode">Pincode <span class="asteric text-danger fs-4">*</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="userPermanentAddressPincode" 
+									id="userPermanentAddressPincode" 
+									placeholder="Enter pincode" 
+									maxlength="6" 
+									th:field="*{address[0].addressPincode}"
+									onkeyup="validatePincode(this)">
+									
+								<small class="error-text text-danger">Please enter a valid pincode</small>
+							</div>
+						</div>
+						
+						<!-- Seperator -->
+						<div class="col-1">
+						</div>
+						<div class="col-5">
+							<div class="form-group mb-3 d-none">
+								<input 
+									type="hidden" class="form-control" 
+									name="userCorrespondenceAddressId" 
+									id="userCorrespondenceAddressId" 
+									placeholder="Enter street name" 
+									th:field="*{address[1].addressId}">
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userCorrespondenceAddressStreet">Street <span class="asteric text-danger fs-4">&nbsp;</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="user-correspondence-address-street" 
+									id="userCorrespondenceAddressStreet" 
+									placeholder="Enter street name " 
+									th:field="*{address[1].addressStreet}"
+									onkeyup="validateStreet(this)">
+									
+								<small class="error-text text-danger">Please enter a valid street name</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userCorrespondenceAddressLine1">Line 1 <span class="asteric text-danger fs-4">&nbsp;</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="user-correspondence-address-line-1" 
+									id="userCorrespondenceAddressLine1" 
+									placeholder="Enter Line 1  " 
+									th:field="*{address[1].addressLine1}"
+									onkeyup="validateLine(this)">
+									
+								<small class="error-text text-danger">Please enter a valid address</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userCorrespondenceAddressLine2">Line 2 <span class="asteric text-danger fs-4">&nbsp;</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="user-correspondence-address-line-2" 
+									id="userCorrespondenceAddressLine2" 
+									placeholder="Enter Line 2  " 
+									th:field="*{address[1].addressLine2}"
+									onkeyup="validateLine(this)">
+									
+								<small class="error-text text-danger">Please enter a valid address</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userCorrespondenceAddressCity">City <span class="asteric text-danger fs-4">&nbsp;</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="user-correspondence-address-city" 
+									id="userCorrespondenceAddressCity" 
+									placeholder="Enter city name " 
+									th:field="*{address[1].addressCity}"
+									onkeyup="validateCityState(this)">
+									
+								<small class="error-text text-danger">Please enter a valid city name</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userCorrespondenceAddressState">State <span class="asteric text-danger fs-4">&nbsp;</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="user-correspondence-address-state" 
+									id="userCorrespondenceAddressState" 
+									placeholder="Enter state name " 
+									th:field="*{address[1].addressState}"
+									onkeyup="validateCityState(this)">
+									
+								<small class="error-text text-danger">Please enter a valid state name</small>
+							</div>
+							<div class="form-group mb-3">
+								<label class="mb-2" for="userCorrespondenceAddressPincode">Pincode <span class="asteric text-danger fs-4">&nbsp;</span></label>
+								<input 
+									type="text" 
+									class="form-control" 
+									name="user-correspondence-address-pincode" 
+									id="userCorrespondenceAddressPincode" 
+									placeholder="Enter pincode" 
+									maxlength="6" 
+									th:field="*{address[1].addressPincode}"
+									onkeyup="validatePincode(this)">
+									
+								<small class="error-text text-danger">Please enter a valid pincode</small>
+							</div>
+						</div>
+
+					</div>
+					
+					<div class="">
+						<small>
+							<label for="correspondeceSameAsPermanentCheckbox">Correspondence address is same as permanent</label>
+							<input type="checkbox" id="correspondeceSameAsPermanentCheckbox" onchange="correspondenceSAddressameAsPermanent()">
+						</small>
+					</div>
+					
+					<div class="buttons mt-5">
+						<button type="submit" class="btn btn-success mr-5" onclick="return validateUserForm()">
+							Submit 
+							&nbsp;
+							<i class="fa fa-user-plus"></i>
+						</button>
+						&nbsp;
+						<a th:href="@{/home}">
+							<button type="button" class="btn btn-danger ml-5">
+								Cancel 
+								<!-- <i class="fa fa-refresh"></i> -->
+							</button>
+						</a>
+					</div>
+				</form>	
+			</div>
+		</div>
+		
+		<!-- Javascript Bootstrap5 bundle -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	</body>
+</html>
